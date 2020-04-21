@@ -2,42 +2,48 @@ import pulp as solver
 from pulp import *
 import Graph
 import time
-
+from tqdm import tqdm
 z = 0
 solvers = [solver.CPLEX(), solver.GLPK(), solver.GUROBI(), solver.PULP_CBC_CMD(), solver.COIN()]
 solverUsado = 0
-listaProblemas = ["instance_01_5pol.txt"]
+listaProblemas = ["Instances/separated/rco1_sep.txt"]
 for ptk in listaProblemas:
+    print("Initializing graph",ptk)
     g = Graph.Graph(5,1,z)
     g.initProblem(ptk)
     g.z = len(g.edgeCuts)*2
+    print("Initializing variables X")
     var = [(i+','+str(t)) for i in g.edge for t in range(1,g.z)]
+    print("Initializing variables Y")
     var2 = [(str(i)+','+str(t)) for i in g.vertices for t in range(1,g.z)]
     X = solver.LpVariable.dicts("X",var,cat=solver.LpBinary)
     Y = solver.LpVariable.dicts("Y",var2,cat=solver.LpBinary)
     problem = solver.LpProblem("The best Cut" , solver.LpMinimize)
-        
+    print("Initializing F.O")
     problem += (solver.lpSum(X.get(str(i.split(',')[0])+','+str(i.split(',')[1])+','+str(t))*g.mis[i.split(',')[0]][i.split(',')[1]] for i in g.edge for t in range(1,g.z)) + 
                     solver.lpSum(((g.pis[k.split(',')[0]][k.split(',')[1]]))-(
                                        (g.mis[k.split(',')[0]][k.split(',')[1]])) for k in g.edgeCuts)/2)+solver.lpSum(X.get(str(i.split(',')[0])+','+str(i.split(',')[1])+','+str(1))*g.initDes[int(i.split(',')[0])-1] for i in g.edge)
-    for t in range(1,g.z):
+    print("Initializing First Restriction")
+    for t in tqdm(range(1,g.z)):
         problem += solver.lpSum(X.get(str(i.split(',')[0])+','+str(i.split(',')[1])+','+str(t)) for i in g.edge) <= 1
-       
-    for i in g.edgeCuts:
+    print("Initializing Second Restriction")   
+    for i in tqdm(g.edgeCuts):
         problem += solver.lpSum(X.get(str(i.split(',')[0])+','+str(i.split(',')[1])+','+str(t))+X.get(str(i.split(',')[1])+','+str(i.split(',')[0])+','+str(t)) for t in range(1,g.z)) >= 1
-        
-    for i in g.edge:
+    print("Initializing Third Restriction")  
+    for i in tqdm(g.edge):
         for t in range(1,(g.z)-1):
             problem += (solver.lpSum(X.get(str(k)+','+str(i.split(',')[1])+','+str(t)) for k in g.arrive(i.split(',')[1])) - (solver.lpSum(X.get(str(i.split(',')[1])+','+str(j)+','+str(t+(1)))for j in g.leave(i.split(',')[1])))-Y.get(str(i.split(',')[1])+','+str(t))) == 0
     timeIn = time.time()
-    problem.writeLP(ptk.replace(".txt",".lp"))
+    #problem.writeLP(ptk.replace(".txt",".lp"))
     #sCplex = solver.CPLEX()
     #solver.GLPK()
+    print("Initializing Solver")
     st = problem.solve(solvers[solverUsado])
     tempos = open("tempos.txt","a+")
     tempos.writelines("PROBLEM ===== "+ptk.replace(".txt","") +" --- F.O ===== "+str(solver.value(problem.objective)) + "   ----     TIME  ===== "+str(problem.solutionTime)+"\n")
     tempos.close()
     values = []
+    print("Getting results...")
     for k in problem.variables():
         if(solver.value(k) > 0):
             if(k.name.split('_')[0] == 'X'):
@@ -50,8 +56,10 @@ for ptk in listaProblemas:
         valuesOr[ind-1] = cut
     for i in valuesOr:
         print(i)
-    g.plotSoluation(valuesOr,ptk.replace(".txt",""))
-    g.plotCuts(ptk.replace(".txt",""))
-    g.plotCor(ptk.replace(".txt",""))
-    g.plotDesloc(valuesOr,ptk.replace(".txt",""))
+    g.plotSolution3(valuesOr,ptk.replace(".txt",""),solver.value(problem.objective))
+    #g.plotCuts(ptk.replace(".txt",""))
+    #g.plotCor(ptk.replace(".txt",""))
+    #g.plotDesloc(valuesOr,ptk.replace(".txt",""))
     print("VALUE OF F.O = ",solver.value(problem.objective))
+    
+

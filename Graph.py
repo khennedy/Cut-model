@@ -86,7 +86,7 @@ class Graph():
             s = i.split(',')[0]
             f = i.split(',')[1]
             plt.plot([self.points[int(f)-1][0],self.points[int(s)-1][0]],[self.points[int(f)-1][1],self.points[int(s)-1][1]],'red',label='1')
-        plt.savefig(name+"problemImage"+".jpg")
+        plt.savefig(name+"problemImage"+".jpg",dpi=300)
         #plt.show()
         plt.close()
     def plotCuts(self,name):
@@ -94,7 +94,7 @@ class Graph():
             s = i.split(',')[0]
             f = i.split(',')[1]
             plt.plot([self.points[int(f)-1][0],self.points[int(s)-1][0]],[self.points[int(f)-1][1],self.points[int(s)-1][1]],'red',label='1')
-        plt.savefig(name+"OnlyCuts"+".jpg")
+        plt.savefig(name+"OnlyCuts"+".jpg",dpi=300)
         #plt.show()
         plt.close()
     
@@ -117,7 +117,7 @@ class Graph():
         #plt.show()
         plt.close()
     
-    def plotSoluation(self, cuts,name):
+    def plotSolution(self, cuts,name):
         for i in self.edge:
             s = i.split(',')[0]
             f = i.split(',')[1]
@@ -131,10 +131,79 @@ class Graph():
         for i in range(len(cuts)):
             s = int(cuts[i].split(',')[0])
             f = int(cuts[i].split(',')[1])
-            
             plt.text((self.points[s-1][0]+self.points[f-1][0])/2,(self.points[s-1][1]+self.points[f-1][1])/2,str(i+1))
         #plt.show()
         plt.savefig(name+"solutationFinal"+".jpg")
+        plt.close()
+    
+    def plotSolution2(self, cuts ,name):
+        plot1 = plt.subplot(1,2,1)
+        plot2 = plt.subplot(1,2,2)
+        max_x = 0
+        max_y = 0
+        vis = []
+        count = 1
+        for i in cuts:
+            s = int(i.split(',')[0])
+            f = int(i.split(',')[1])
+            if (not i in self.edgeCuts) or (i in vis):
+                plot2.plot([self.points[int(f)-1][0],self.points[int(s)-1][0]],[self.points[int(f)-1][1],self.points[int(s)-1][1]],'red',marker='>')
+                plot2.text((self.points[s-1][0]+self.points[f-1][0])/2,(self.points[s-1][1]+self.points[f-1][1])/2,str(count))
+            else:
+                vis.append(i)
+                vis.append(i.split(',')[1]+','+i.split(',')[0])
+                plot1.plot([self.points[int(f)-1][0],self.points[int(s)-1][0]],[self.points[int(f)-1][1],self.points[int(s)-1][1]],'blue',marker='>')
+                plot1.text((self.points[s-1][0]+self.points[f-1][0])/2,(self.points[s-1][1]+self.points[f-1][1])/2,str(count))
+            count += 1
+        plot1.set_xlim(min(plot1.get_xlim()[0],plot2.get_xlim()[0]),max(plot1.get_xlim()[1],plot2.get_xlim()[1]))
+        plot2.set_xlim(min(plot1.get_xlim()[0],plot2.get_xlim()[0]),max(plot1.get_xlim()[1],plot2.get_xlim()[1]))
+        plot1.set_ylim(min(plot1.get_ylim()[0],plot2.get_ylim()[0]),max(plot1.get_ylim()[1],plot2.get_ylim()[1]))
+        plot2.set_ylim(min(plot1.get_ylim()[0],plot2.get_ylim()[0]),max(plot1.get_ylim()[1],plot2.get_ylim()[1]))
+        
+        #plt.show()
+        plt.savefig(name+"solutationFinal"+".jpg",dpi=300)
+        plt.close()
+    def plotSolution3(self, cuts ,name, fo):
+        plt.figure()
+        vis = []
+        count = 1
+        add_x = max(self.points)[0]*0.05
+        add_y = max(self.points)[1]*0.05
+        for i in cuts:
+            s = int(i.split(',')[0])
+            f = int(i.split(',')[1])
+            if (not i in self.edgeCuts) or (i in vis):
+                if i in vis:
+                    if self.points[int(s)-1][0] == self.points[int(f)-1][0]:
+                        qv_d = plt.quiver(self.points[int(s)-1][0]+add_x,self.points[int(s)-1][1],self.points[int(f)-1][0]-self.points[int(s)-1][0],(self.points[int(f)-1][1])-self.points[int(s)-1][1], scale_units='xy', angles='xy', scale=1,color='red')
+                        plt.text((self.points[s-1][0]+self.points[f-1][0])/2+add_x,(self.points[s-1][1]+self.points[f-1][1])/2,str(count))
+                
+                    elif self.points[int(s)-1][1] == self.points[int(f)-1][1]:
+                        qv_d = plt.quiver(self.points[int(s)-1][0],self.points[int(s)-1][1]+add_y,self.points[int(f)-1][0]-self.points[int(s)-1][0],(self.points[int(f)-1][1])-self.points[int(s)-1][1], scale_units='xy', angles='xy', scale=1,color='red')
+                        plt.text((self.points[s-1][0]+self.points[f-1][0])/2,(self.points[s-1][1]+self.points[f-1][1])/2+add_y,str(count))
+                    else:
+                        qv_d = plt.quiver(self.points[int(s)-1][0]+add_x,self.points[int(s)-1][1]+add_y,self.points[int(f)-1][0]-self.points[int(s)-1][0],(self.points[int(f)-1][1])-self.points[int(s)-1][1], scale_units='xy', angles='xy', scale=1,color='red')
+                        plt.text((self.points[s-1][0]+self.points[f-1][0])/2+add_x,(self.points[s-1][1]+self.points[f-1][1])/2+add_y,str(count))
+                    
+                else:
+                    qv_d = plt.quiver(self.points[int(s)-1][0],self.points[int(s)-1][1],self.points[int(f)-1][0]-self.points[int(s)-1][0],self.points[int(f)-1][1]-self.points[int(s)-1][1], scale_units='xy', angles='xy', scale=1,color='red')
+                    plt.text((self.points[s-1][0]+self.points[f-1][0])/2,(self.points[s-1][1]+self.points[f-1][1])/2,str(count))
+                    
+            else:
+                vis.append(i)
+                vis.append(i.split(',')[1]+','+i.split(',')[0])
+                qv_c = plt.quiver(self.points[int(s)-1][0],self.points[int(s)-1][1],self.points[int(f)-1][0]-self.points[int(s)-1][0],self.points[int(f)-1][1]-self.points[int(s)-1][1], scale_units='xy', angles='xy', scale=1,color='blue')
+                plt.text((self.points[s-1][0]+self.points[f-1][0])/2,(self.points[s-1][1]+self.points[f-1][1])/2,str(count))
+            count += 1
+        #plt.xlim(0,250)
+        #plt.ylim(0,250)
+        #plt.show()
+        plt.quiverkey(qv_d,(plt.xlim()[1]//2)-(plt.xlim()[1]//2)*.5, plt.ylim()[1]+plt.ylim()[1]*.05,150, 'Moves', coordinates='data')
+        plt.quiverkey(qv_c,(plt.xlim()[1]//2)+(plt.xlim()[1]//2)*.5, plt.ylim()[1]+plt.ylim()[1]*.05, 150, 'Cut', coordinates='data')
+        plt.text((plt.xlim()[1]//2)-(plt.xlim()[1]//2)*.35, plt.ylim()[1]+plt.ylim()[1]*.05,"Time Required: {:.2f}".format(fo))
+            
+        #plt.ylim(plt.ylim()[0],plt.ylim()[1]+60)
+        plt.savefig(name+"solutationFinalAdd"+".jpg",dpi=300)
         plt.close()
     
     def euclidianDistance(self, p1, p2):
