@@ -86,7 +86,7 @@ class Graph():
             s = i.split(',')[0]
             f = i.split(',')[1]
             plt.plot([self.points[int(f)-1][0],self.points[int(s)-1][0]],[self.points[int(f)-1][1],self.points[int(s)-1][1]],'red',label='1')
-        plt.savefig(name+"problemImage"+".jpg",dpi=300)
+        plt.savefig(name+"problemImage"+".png",dpi=300)
         #plt.show()
         plt.close()
     def plotCuts(self,name):
@@ -94,7 +94,7 @@ class Graph():
             s = i.split(',')[0]
             f = i.split(',')[1]
             plt.plot([self.points[int(f)-1][0],self.points[int(s)-1][0]],[self.points[int(f)-1][1],self.points[int(s)-1][1]],'red',label='1')
-        plt.savefig(name+"OnlyCuts"+".jpg",dpi=300)
+        plt.savefig(name+"OnlyCuts"+".png",dpi=300)
         #plt.show()
         plt.close()
     
@@ -112,7 +112,7 @@ class Graph():
                 plt.text((self.points[s-1][0]+self.points[f-1][0])/2,(self.points[s-1][1]+self.points[f-1][1])/2,str(i+1))
                 
             save.append(cuts[i])
-            plt.savefig(name+str(i)+".jpg")
+            plt.savefig(name+str(i)+".png",dpi=300)
             
         #plt.show()
         plt.close()
@@ -135,7 +135,7 @@ class Graph():
             
             plt.text((self.points[s-1][0]+self.points[f-1][0])/2,(self.points[s-1][1]+self.points[f-1][1])/2,str(i+1))
         #plt.show()
-        plt.savefig(name+"solutationFinal"+".jpg")
+        plt.savefig(name+"solutationFinal"+".png",dpi=300)
         plt.close()
     
     def plotSolution2(self, cuts ,name):
@@ -163,7 +163,7 @@ class Graph():
         plot2.set_ylim(min(plot1.get_ylim()[0],plot2.get_ylim()[0]),max(plot1.get_ylim()[1],plot2.get_ylim()[1]))
         
         #plt.show()
-        plt.savefig(name+"solutationFinal"+".jpg",dpi=300)
+        plt.savefig(name+"solutationFinal"+".png",dpi=300)
         plt.close()
     def plotSolution3(self, cuts ,name, fo):
         plt.figure()
@@ -205,7 +205,7 @@ class Graph():
         plt.text((plt.xlim()[1]//2)-(plt.xlim()[1]//2)*.35, plt.ylim()[1]+plt.ylim()[1]*.05,"Time Required: {:.2f}".format(fo))
             
         #plt.ylim(plt.ylim()[0],plt.ylim()[1]+60)
-        plt.savefig(name+"solutationFinalAdd"+".jpg",dpi=300)
+        plt.savefig(name+"solutationFinalAdd"+".png",dpi=300)
         plt.close()
     
     def euclidianDistance(self, p1, p2):

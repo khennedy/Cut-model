@@ -44,23 +44,23 @@ for ptk in problems:
     tempos.writelines("PROBLEM: "+ptk.replace(".txt","") +", F.O: "+str(solver.value(problem.objective)) + ", TIME: "+str(problem.solutionTime)+"\n")
     tempos.close()
     values = []
-    print("Getting results...")
-    for k in problem.variables():
-        if(solver.value(k) > 0):
-            if(k.name.split('_')[0] == 'X'):
-                values.append(k)
-    valuesOr = [None for i in range(len(values))]
-    for i in values:
-        ind = int(i.name.split(',')[2])
-        cut = i.name.split(',')[0].split('_')[1]+','+i.name.split(',')[1]
-        valuesOr[ind-1] = cut
     try:
+        print("Getting results...")
+        for k in problem.variables():
+            if(solver.value(k) > 0):
+                if(k.name.split('_')[0] == 'X'):
+                    values.append(k)
+        valuesOr = [None for i in range(len(values))]
+        for i in values:
+            ind = int(i.name.split(',')[2])
+            cut = i.name.split(',')[0].split('_')[1]+','+i.name.split(',')[1]
+            valuesOr[ind-1] = cut
         os.makedirs("Results/"+ptk.split("/")[-1].split(".")[0])
+        g.plotCuts("Results/"+ptk.split("/")[-1].split(".")[0]+"/"+ptk.split("/")[-1].replace(".txt",""))
+        g.plotCor("Results/"+ptk.split("/")[-1].split(".")[0]+"/"+ptk.split("/")[-1].replace(".txt",""))
+        g.plotDesloc(valuesOr,"Results/"+ptk.split("/")[-1].split(".")[0]+"/"+ptk.split("/")[-1].replace(".txt",""))
+        g.plotSolution(valuesOr,"Results/"+ptk.split("/")[-1].split(".")[0]+"/"+ptk.split("/")[-1].replace(".txt",""))
     except:
-        print("Exist")
-    g.plotCuts("Results/"+ptk.split("/")[-1].split(".")[0]+"/"+ptk.split("/")[-1].replace(".txt",""))
-    g.plotCor("Results/"+ptk.split("/")[-1].split(".")[0]+"/"+ptk.split("/")[-1].replace(".txt",""))
-    g.plotDesloc(valuesOr,"Results/"+ptk.split("/")[-1].split(".")[0]+"/"+ptk.split("/")[-1].replace(".txt",""))
-    g.plotSolution(valuesOr,"Results/"+ptk.split("/")[-1].split(".")[0]+"/"+ptk.split("/")[-1].replace(".txt",""))
+        print("Fail problem",ptk)
     
 
