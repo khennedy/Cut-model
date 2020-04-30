@@ -1,0 +1,3 @@
+PROBLEM: Instances/packing/instance_01_5pol, F.O: 1230.0, TIME: 15.263950999999906
+PROBLEM: Instances/packing/instance_01_5pol, F.O: 1210.0, TIME: 69.10132399999998
+PROBLEM: Instances/packing/instance_01_5pol, F.O: 1210.0, TIME: 72.489466
