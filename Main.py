@@ -1,13 +1,16 @@
 import pulp as solver
 from pulp import *
 import Graph
-import time
+import os
 from tqdm import tqdm
 z = 0
-solvers = [solver.CPLEX(), solver.GLPK(), solver.GUROBI(), solver.PULP_CBC_CMD(), solver.COIN()]
+solvers = [solver.CPLEX(timeLimit=7200), solver.GLPK(), solver.GUROBI()]
 solverUsado = 0
-listaProblemas = ["Instances/separated/rco1_sep.txt"]
-for ptk in listaProblemas:
+
+problems_packing = ["Instances/packing/"+i for i in os.listdir("Instances/packing/")]
+problems_sep = ["Instances/separated/"+i for i in os.listdir("Instances/separated/")]
+problems = problems_packing + problems_sep
+for ptk in problems:
     print("Initializing graph",ptk)
     g = Graph.Graph(5,1,z)
     g.initProblem(ptk)
@@ -33,33 +36,30 @@ for ptk in listaProblemas:
     for i in tqdm(g.edge):
         for t in range(1,(g.z)-1):
             problem += (solver.lpSum(X.get(str(k)+','+str(i.split(',')[1])+','+str(t)) for k in g.arrive(i.split(',')[1])) - (solver.lpSum(X.get(str(i.split(',')[1])+','+str(j)+','+str(t+(1)))for j in g.leave(i.split(',')[1])))-Y.get(str(i.split(',')[1])+','+str(t))) == 0
-    timeIn = time.time()
-    #problem.writeLP(ptk.replace(".txt",".lp"))
-    #sCplex = solver.CPLEX()
-    #solver.GLPK()
+
     print("Initializing Solver")
     st = problem.solve(solvers[solverUsado])
     tempos = open("tempos.txt","a+")
-    tempos.writelines("PROBLEM ===== "+ptk.replace(".txt","") +" --- F.O ===== "+str(solver.value(problem.objective)) + "   ----     TIME  ===== "+str(problem.solutionTime)+"\n")
+    tempos.writelines("PROBLEM: "+ptk.replace(".txt","") +", F.O: "+str(solver.value(problem.objective)) + ", TIME: "+str(problem.solutionTime)+"\n")
     tempos.close()
     values = []
-    print("Getting results...")
-    for k in problem.variables():
-        if(solver.value(k) > 0):
-            if(k.name.split('_')[0] == 'X'):
-                values.append(k)
-    valuesOr = [None for i in range(len(values))]
-    
-    for i in values:
-        ind = int(i.name.split(',')[2])
-        cut = i.name.split(',')[0].split('_')[1]+','+i.name.split(',')[1]
-        valuesOr[ind-1] = cut
-    for i in valuesOr:
-        print(i)
-    g.plotSolution3(valuesOr,ptk.replace(".txt",""),solver.value(problem.objective))
-    #g.plotCuts(ptk.replace(".txt",""))
-    #g.plotCor(ptk.replace(".txt",""))
-    #g.plotDesloc(valuesOr,ptk.replace(".txt",""))
-    print("VALUE OF F.O = ",solver.value(problem.objective))
+    try:
+        print("Getting results...")
+        for k in problem.variables():
+            if(solver.value(k) > 0):
+                if(k.name.split('_')[0] == 'X'):
+                    values.append(k)
+        valuesOr = [None for i in range(len(values))]
+        for i in values:
+            ind = int(i.name.split(',')[2])
+            cut = i.name.split(',')[0].split('_')[1]+','+i.name.split(',')[1]
+            valuesOr[ind-1] = cut
+        os.makedirs("Results/"+ptk.split("/")[-1].split(".")[0])
+        g.plotCuts("Results/"+ptk.split("/")[-1].split(".")[0]+"/"+ptk.split("/")[-1].replace(".txt",""))
+        g.plotCor("Results/"+ptk.split("/")[-1].split(".")[0]+"/"+ptk.split("/")[-1].replace(".txt",""))
+        g.plotDesloc(valuesOr,"Results/"+ptk.split("/")[-1].split(".")[0]+"/"+ptk.split("/")[-1].replace(".txt",""))
+        g.plotSolution(valuesOr,"Results/"+ptk.split("/")[-1].split(".")[0]+"/"+ptk.split("/")[-1].replace(".txt",""))
+    except:
+        print("Fail problem",ptk)
     
 

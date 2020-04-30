@@ -104,7 +104,7 @@ class Graph():
             s = int(cuts[i].split(',')[0])
             f = int(cuts[i].split(',')[1])
             
-            if(not cuts[i] in save and (not str(str(f)+","+str(s)) in save)):
+            if(not cuts[i] in save and (not str(str(f)+","+str(s)) in save) and (cuts[i] in self.edgeCuts or (str(str(f)+","+str(s)) in self.edgeCuts))):
                 plt.plot([self.points[int(f)-1][0],self.points[int(s)-1][0]],[self.points[int(f)-1][1],self.points[int(s)-1][1]],'red',label='1')
                 plt.text((self.points[s-1][0]+self.points[f-1][0])/2,(self.points[s-1][1]+self.points[f-1][1])/2,str(i+1))
             else:
@@ -118,6 +118,7 @@ class Graph():
         plt.close()
     
     def plotSolution(self, cuts,name):
+        vis = []
         for i in self.edge:
             s = i.split(',')[0]
             f = i.split(',')[1]
@@ -131,6 +132,7 @@ class Graph():
         for i in range(len(cuts)):
             s = int(cuts[i].split(',')[0])
             f = int(cuts[i].split(',')[1])
+            
             plt.text((self.points[s-1][0]+self.points[f-1][0])/2,(self.points[s-1][1]+self.points[f-1][1])/2,str(i+1))
         #plt.show()
         plt.savefig(name+"solutationFinal"+".jpg")
@@ -207,7 +209,8 @@ class Graph():
         plt.close()
     
     def euclidianDistance(self, p1, p2):
-        return (((p1[0]-p2[0])**2)+((p1[1]-p2[1])**2))**(1/2)
+        return max(abs(p1[0]-p2[0]),abs(p1[1]-p2[1]))
+        #return (((p1[0]-p2[0])**2)+((p1[1]-p2[1])**2))**(1/2)
     
     
     
