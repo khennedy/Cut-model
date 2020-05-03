@@ -2,6 +2,7 @@ import pulp as solver
 from pulp import *
 import Graph
 import os
+import gc
 import signal
 from tqdm import tqdm
 z = 0
@@ -30,9 +31,9 @@ for ptk in problems:
         Y = solver.LpVariable.dicts("Y",var2,cat=solver.LpBinary)
         problem = solver.LpProblem("The best Cut" , solver.LpMinimize)
         print("Initializing F.O")
-        problem += (solver.lpSum(X.get(str(i.split(',')[0])+','+str(i.split(',')[1])+','+str(t))*g.mis[i.split(',')[0]][i.split(',')[1]] for i in g.edge for t in range(1,g.z)) + 
+        problem += (solver.lpSum(X.get(str(i.split(',')[0])+','+str(i.split(',')[1])+','+str(t))*g.mis[i.split(',')[0]][i.split(',')[1]] for i in tqdm(g.edge,desc="First sum F.O") for t in range(1,g.z)) + 
                         solver.lpSum(((g.pis[k.split(',')[0]][k.split(',')[1]]))-(
-                                           (g.mis[k.split(',')[0]][k.split(',')[1]])) for k in g.edgeCuts)/2)+solver.lpSum(X.get(str(i.split(',')[0])+','+str(i.split(',')[1])+','+str(1))*g.initDes[int(i.split(',')[0])-1] for i in g.edge)
+                                           (g.mis[k.split(',')[0]][k.split(',')[1]])) for k in tqdm(g.edgeCuts,desc="Second sum F.O"))/2)+solver.lpSum(X.get(str(i.split(',')[0])+','+str(i.split(',')[1])+','+str(1))*g.initDes[int(i.split(',')[0])-1] for i in tqdm(g.edge,desc="Third sum F.O"))
         print("Initializing First Restriction")
         for t in tqdm(range(1,g.z)):
             problem += solver.lpSum(X.get(str(i.split(',')[0])+','+str(i.split(',')[1])+','+str(t)) for i in g.edge) <= 1
@@ -80,4 +81,8 @@ for ptk in problems:
         tempos.close()
         print("TL exceeded")
         pass
-    
+    del problem
+    del X
+    del Y
+    del g
+    gc.collect()

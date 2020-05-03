@@ -1,0 +1,26 @@
+Initializing graph Instances/packing/instance_artificial_01_26pol_hole.txt
+Initializing variables X
+Initializing variables Y
+Traceback (most recent call last):
+  File "Main.py", line 22, in <module>
+    X = solver.LpVariable.dicts("X",var,cat=solver.LpBinary)
+  File "/home/guilherme/.local/lib/python3.6/site-packages/pulp/pulp.py", line 299, in dicts
+    d[i] = LpVariable(name % tuple(indexStart + [str(i)]), lowBound, upBound, cat)
+  File "/home/guilherme/.local/lib/python3.6/site-packages/pulp/pulp.py", line 234, in __init__
+    LpElement.__init__(self,name)
+  File "/home/guilherme/.local/lib/python3.6/site-packages/pulp/pulp.py", line 150, in __init__
+    self.name = name
+  File "/home/guilherme/.local/lib/python3.6/site-packages/pulp/pulp.py", line 142, in setName
+    self.__name = str(name).translate(self.trans)
+KeyboardInterrupt
+Initializing graph Instances/packing/instance_artificial_01_26pol_hole.txt
+Initializing variables X
+Initializing variables Y
+Traceback (most recent call last):
+  File "Main.py", line 22, in <module>
+    X = solver.LpVariable.dicts("X",var,cat=solver.LpBinary)
+  File "/home/guilherme/.local/lib/python3.6/site-packages/pulp/pulp.py", line 299, in dicts
+    d[i] = LpVariable(name % tuple(indexStart + [str(i)]), lowBound, upBound, cat)
+  File "/home/guilherme/.local/lib/python3.6/site-packages/pulp/pulp.py", line 238, in __init__
+    self.varValue = None
+KeyboardInterrupt
