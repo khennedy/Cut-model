@@ -12,15 +12,17 @@ solverUsado = 0
 problems_packing = ["Instances/packing/"+i for i in os.listdir("Instances/packing/")]
 problems_sep = ["Instances/separated/"+i for i in os.listdir("Instances/separated/")]
 problems = problems_packing + problems_sep
+print(problems)
+#problems = problems[3:]
 def signal_handler(signum, frame):
     raise Exception("Timed out!")
 
 for ptk in problems:
     signal.signal(signal.SIGALRM, signal_handler)
-    signal.alarm(7200)
+    signal.alarm(8100)
     try:
         print("Initializing graph",ptk)
-        g = Graph.Graph(5,1,z)
+        g = Graph.Graph(400,16.67,z)
         g.initProblem(ptk)
         g.z = len(g.edgeCuts)*2
         print("Initializing variables X")
@@ -67,19 +69,22 @@ for ptk in problems:
                 ind = int(i.name.split(',')[2])
                 cut = i.name.split(',')[0].split('_')[1]+','+i.name.split(',')[1]
                 valuesOr[ind-1] = cut
-            os.makedirs("Results/"+ptk.split("/")[-1].split(".")[0])
+            try:
+                os.makedirs("Results/"+ptk.split("/")[-1].split(".")[0])
+            except:
+                pass
             g.plotCuts("Results/"+ptk.split("/")[-1].split(".")[0]+"/"+ptk.split("/")[-1].replace(".txt",""))
             g.plotCor("Results/"+ptk.split("/")[-1].split(".")[0]+"/"+ptk.split("/")[-1].replace(".txt",""))
             g.plotDesloc(valuesOr,"Results/"+ptk.split("/")[-1].split(".")[0]+"/"+ptk.split("/")[-1].replace(".txt",""))
             g.plotSolution(valuesOr,"Results/"+ptk.split("/")[-1].split(".")[0]+"/"+ptk.split("/")[-1].replace(".txt",""))
-        except:
-            print("Fail problem",ptk)
-    except:
+        except Exception as e:
+            print("Fail problem",ptk,"error",str(e))
+    except Exception as e:
         res = "TL exceeded "
         tempos = open("tempos.txt","a+")
-        tempos.writelines("PROBLEM: "+ptk.replace(".txt","") +", F.O: -1"+" TIME: 2h"+ " is_Optimal: "+res+ "\n")
+        tempos.writelines("PROBLEM: "+ptk.replace(".txt"," ") +", F.O: -1"+" TIME: 2h"+ " is_Optimal: "+res+ "\n")
         tempos.close()
-        print("TL exceeded")
+        print(e)
         pass
     del problem
     del X

@@ -1,17 +1,33 @@
-PROBLEM: Instances/packing/instance_artificial_01_26pol_hole, F.O: -1 TIME: 2h is_Optimal: TL exceeded 
-PROBLEM: Instances/packing/instance_01_16pol, F.O: 1452.0, TIME: 48073.199580528 is_Optimal: OPTIMAL
-PROBLEM: Instances/packing/albano, F.O: -1 TIME: 2h is_Optimal: TL exceeded 
-PROBLEM: Instances/packing/instance_01_3pol, F.O: 670.0, TIME: 27.93957717200101 is_Optimal: OPTIMAL
-PROBLEM: Instances/packing/shapes4, F.O: -1 TIME: 2h is_Optimal: TL exceeded 
-PROBLEM: Instances/packing/instance_01_4pol, F.O: 980.0, TIME: 376.64417977799894 is_Optimal: OPTIMAL
-PROBLEM: Instances/packing/instance_01_2pol, F.O: 560.0, TIME: 0.8388533580000512 is_Optimal: OPTIMAL
-PROBLEM: Instances/packing/spfc_instance, F.O: 6655.800000000007, TIME: 47574.455668842 is_Optimal: OPTIMAL
-PROBLEM: Instances/packing/dighe2, F.O: 1123.8, TIME: 49134.114224063 is_Optimal: OPTIMAL
-PROBLEM: Instances/packing/instance_01_5pol, F.O: 1200.0, TIME: 27605.721184914 is_Optimal: OPTIMAL
-PROBLEM: Instances/packing/instance_01_10pol, F.O: 2200.0, TIME: 49592.939806145005 is_Optimal: OPTIMAL
-PROBLEM: Instances/packing/instance_01_8pol, F.O: 1810.0, TIME: 48849.769683804974 is_Optimal: OPTIMAL
-PROBLEM: Instances/packing/shapes2, F.O: -1 TIME: 2h is_Optimal: TL exceeded 
-PROBLEM: Instances/packing/fu, F.O: 526.4000000000002, TIME: 47168.62468104501 is_Optimal: OPTIMAL
-PROBLEM: Instances/packing/rco1, F.O: 2762.599999999998, TIME: 46451.373334868054 is_Optimal: OPTIMAL
-PROBLEM: Instances/packing/instance_01_7pol, F.O: 1660.0, TIME: 46641.95948470803 is_Optimal: OPTIMAL
-PROBLEM: Instances/packing/instance_01_9pol, F.O: 2140.0, TIME: 49498.63509838999 is_Optimal: OPTIMAL
+PROBLEM: Instances/packing/instance_01_16pol, F.O: 173.30988302339506, TIME: 6682.8716930969995 is_Optimal: OPTIMAL
+PROBLEM: Instances/packing/instance_01_3pol, F.O: 39.24220155968805, TIME: 13.095809373000002 is_Optimal: OPTIMAL
+PROBLEM: Instances/packing/instance_01_4pol, F.O: 57.36360227954407, TIME: 409.756688475 is_Optimal: OPTIMAL
+PROBLEM: Instances/packing/instance_01_2pol, F.O: 33.11840131973605, TIME: 0.6968885699999987 is_Optimal: OPTIMAL
+PROBLEM: Instances/packing/spfc_instance, F.O: 454.7965176964607, TIME: 6746.062375154001 is_Optimal: OPTIMAL
+PROBLEM: Instances/packing/dighe2, F.O: 252.00451409718062, TIME: 6674.181078603 is_Optimal: OPTIMAL
+PROBLEM: Instances/packing/instance_01_5pol, F.O: 69.61120275944808, TIME: 6678.1346713779985 is_Optimal: OPTIMAL
+PROBLEM: Instances/packing/instance_01_10pol, F.O: 127.59980503899214, TIME: 6673.064954376001 is_Optimal: OPTIMAL
+PROBLEM: Instances/packing/instance_01_8pol, F.O: 105.7290041991601, TIME: 6686.831185253002 is_Optimal: OPTIMAL
+PROBLEM: Instances/packing/fu, F.O: 143.07039292141573, TIME: 6675.400120984999 is_Optimal: OPTIMAL
+PROBLEM: Instances/packing/rco1, F.O: 488.9024535092976, TIME: 6693.026734869 is_Optimal: OPTIMAL
+PROBLEM: Instances/packing/instance_01_7pol, F.O: 96.85580383923211, TIME: 6672.335893067 is_Optimal: OPTIMAL
+PROBLEM: Instances/packing/instance_01_9pol, F.O: 124.10040491901611, TIME: 6675.375935511998 is_Optimal: OPTIMAL
+PROBLEM: Instances/packing/blaz1, F.O: 348.22443011397587, TIME: 6660.684618821997 is_Optimal: OPTIMAL
+PROBLEM: Instances/packing/instance_01_6pol, F.O: 81.60880323935208, TIME: 6675.443261824 is_Optimal: OPTIMAL
+PROBLEM: Instances/packing/rco2 , F.O: -1 TIME: 2h is_Optimal: TL exceeded 
+PROBLEM: Instances/packing/dighe1, F.O: 278.7786667666465, TIME: 6704.520384252 is_Optimal: OPTIMAL
+PROBLEM: Instances/separated/dighe1_sep, F.O: 159.02344781043746, TIME: 6371.025673411 is_Optimal: OPTIMAL
+PROBLEM: Instances/separated/dighe2_sep, F.O: 190.9169631073784, TIME: 6648.198070945001 is_Optimal: OPTIMAL
+PROBLEM: Instances/separated/fu_sep, F.O: 115.41201709658041, TIME: 6592.918998864998 is_Optimal: OPTIMAL
+PROBLEM: Instances/separated/instance_01_8pol_sep, F.O: 157.01880623875238, TIME: 6651.488725676 is_Optimal: OPTIMAL
+PROBLEM: Instances/separated/instance_01_3pol_sep, F.O: 48.090401919616056, TIME: 4.036589316000573 is_Optimal: OPTIMAL
+PROBLEM: Instances/separated/instance_01_9pol_sep, F.O: 187.11280743851248, TIME: 6665.877797653 is_Optimal: OPTIMAL
+PROBLEM: Instances/separated/instance_01_6pol_sep, F.O: 114.20220455908816, TIME: 6651.027196058 is_Optimal: OPTIMAL
+PROBLEM: Instances/separated/instance_01_2pol_sep, F.O: 36.04280143971205, TIME: 1.1488909369999998 is_Optimal: OPTIMAL
+PROBLEM: Instances/separated/instance_artificial_01_26pol_hole_sep , F.O: -1 TIME: 2h is_Optimal: TL exceeded 
+PROBLEM: Instances/separated/rco1_sep, F.O: 1348.0537582483503, TIME: 6703.448977534 is_Optimal: OPTIMAL
+PROBLEM: Instances/separated/spfc_instance_sep, F.O: 224.33072585482861, TIME: 6802.743610851 is_Optimal: OPTIMAL
+PROBLEM: Instances/separated/instance_01_4pol_sep, F.O: 72.13560287942411, TIME: 182.1834607510009 is_Optimal: OPTIMAL
+PROBLEM: Instances/separated/instance_01_7pol_sep, F.O: 138.7474055188961, TIME: 6619.439356876999 is_Optimal: OPTIMAL
+PROBLEM: Instances/separated/blaz1_sep, F.O: 889.5609223155365, TIME: 6698.122856408998 is_Optimal: OPTIMAL
+PROBLEM: Instances/separated/instance_01_5pol_sep, F.O: 90.13200359928013, TIME: 447.6405091009983 is_Optimal: OPTIMAL
+PROBLEM: Instances/separated/instance_01_10pol_sep, F.O: 198.26160767846457, TIME: 6698.001270715999 is_Optimal: OPTIMAL
